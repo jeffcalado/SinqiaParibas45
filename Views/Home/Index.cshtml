@@ -23,7 +23,8 @@
         </div>
 
         <div class="mt-4">
-            <a asp-controller="MovimentoManuals" asp-action="Index" class="btn btn-primary btn-lg">CLICK TO SEE</a>
+            @Html.ActionLink("See the test", "Index", "MovimentoManuals", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+            
         </div>
     </div>
 </main>
