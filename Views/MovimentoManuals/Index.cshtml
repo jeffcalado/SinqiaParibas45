@@ -1,0 +1,71 @@
+﻿@model SinqiaParibas45.ViewModels.MovimentoManualViewModel
+
+@{
+    ViewBag.Title = "Movimentos Manuais";
+}
+
+<h1>Movimentos Manuais</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Create", "MovimentoManual", FormMethod.Post, new { id = "movimentoForm" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-row">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MovimentoAtual.DAT_MES, "Mês")
+                    @Html.TextBoxFor(m => m.MovimentoAtual.DAT_MES, new { @class = "form-control", type = "number", disabled = "disabled", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MovimentoAtual.DAT_ANO, "Ano")
+                    @Html.TextBoxFor(m => m.MovimentoAtual.DAT_ANO, new { @class = "form-control", type = "number", disabled = "disabled", required = "required" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MovimentoAtual.COD_PRODUTO, "Produto")
+                    @Html.DropDownListFor(m => m.MovimentoAtual.COD_PRODUTO,
+                        new SelectList(ViewBag.Produtos, "Value", "Text"),
+                        "--Selecione--",
+                        new { @class = "form-control", disabled = "disabled" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MovimentoAtual.COD_COSIF, "Cosif")
+                    @Html.DropDownListFor(m => m.MovimentoAtual.COD_COSIF,
+                        new SelectList(ViewBag.ProdutoCosifs, "Value", "Text"),
+                        "--Selecione--",
+                        new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MovimentoAtual.DES_DESCRICAO, "Descrição")
+                @Html.TextAreaFor(m => m.MovimentoAtual.DES_DESCRICAO, new { @class = "form-control", disabled = "disabled", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MovimentoAtual.VAL_VALOR, "Valor")
+                @Html.TextBoxFor(m => m.MovimentoAtual.VAL_VALOR, new { @class = "form-control", type = "number", step = "0.01", disabled = "disabled", required = "required" })
+            </div>
+
+            @Html.HiddenFor(m => m.MovimentoAtual.COD_USUARIO)
+
+            <hr />
+
+            <button type="reset" class="btn btn-primary">Limpar</button>
+            <button type="button" id="btnNovo" class="btn btn-primary">Novo</button>
+            <button type="submit" id="btnIncluir" class="btn btn-primary">Incluir</button>
+        }
+    </div>
+</div>
+
+<div id="gridContainer">
+    @Html.Partial("_MovimentosGrid", Model.Movimentos)
+</div>
+
+@section Scripts {
+    @Html.Partial("_MovimentosScripts")
+}
+

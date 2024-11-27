@@ -1,0 +1,92 @@
+﻿<script>
+    $(document).ready(function () {
+        // Habilitar campos no botão "Novo"
+        $('#btnNovo').on('click', function () {
+            // Habilita todos os campos do formulário
+            $('#movimentoForm').find('input, select, textarea').prop('disabled', false);
+
+            // Habilita o botão "Incluir"
+            $('#btnIncluir').prop('disabled', false);
+        });
+
+        // Enviar formulário ao clicar em "Incluir"
+        $('#movimentoForm').on('submit', function (e) {
+            e.preventDefault(); // Previne o comportamento padrão do formulário
+
+            var formData = $(this).serialize(); // Serializa os dados do formulário para envio
+            alert('chegou aqui');
+            $.ajax({
+                url: '@Url.Action("Create", "MovimentoManuals")',
+                type: 'POST',
+                data: formData,
+                success: function (html) {
+                    // Substitui o conteúdo do grid com a Partial View retornada
+                    $('#gridContainer').html(html);
+
+                    // Desabilita os campos novamente após o envio
+                    $('#movimentoForm').find('input, select, textarea').prop('disabled', true);
+
+                    // Desabilita o botão "Incluir"
+                    $('#btnIncluir').prop('disabled', true);
+
+                    // Limpa os campos do formulário
+                    $('#movimentoForm')[0].reset();
+                },
+                error: function () {
+                    alert('Ocorreu um erro ao salvar o movimento. Tente novamente.');
+                }
+            });
+        });
+    });
+</script>
+
+
+@*<script>
+    // Habilitar campos no botão "Novo"
+    document.getElementById('btnNovo').addEventListener('click', function () {
+        // Habilita todos os campos do formulário
+        document.querySelectorAll('#movimentoForm input, #movimentoForm select, #movimentoForm textarea').forEach(function (field) {
+            field.disabled = false;
+        });
+        // Habilita o botão "Incluir"
+        document.getElementById('btnIncluir').disabled = false;
+    });
+
+    // Enviar formulário ao clicar em "Incluir"
+    document.getElementById('movimentoForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Previne o comportamento padrão do formulário
+
+        const formData = new FormData(this);
+
+        // Realiza o envio do formulário via POST para criar um novo movimento
+        fetch('@Url.Action("Create", "MovimentoManuals")', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao salvar o movimento.');
+                }
+                return response.text(); // Obtém o HTML da Partial View com o grid atualizado
+            })
+            .then(html => {
+                // Substitui o conteúdo do grid com a Partial View retornada
+                document.getElementById('gridContainer').innerHTML = html;
+
+                // Desabilita os campos novamente após o envio
+                document.querySelectorAll('#movimentoForm input, #movimentoForm select, #movimentoForm textarea').forEach(function (field) {
+                    field.disabled = true;
+                });
+
+                // Desabilita o botão "Incluir"
+                document.getElementById('btnIncluir').disabled = true;
+
+                // Limpa os campos do formulário
+                document.getElementById('movimentoForm').reset();
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Ocorreu um erro ao salvar o movimento. Tente novamente.');
+            });
+    });
+</script>*@

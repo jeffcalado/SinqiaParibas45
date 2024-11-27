@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SinqiaParibas45.Models.MovimentoManual>
+
+<table class="table" id="gridMovimentos">
+    <thead>
+        <tr>
+            <th>Mês</th>
+            <th>Ano</th>
+            <th>Código do Produto</th>
+            <th>Descrição do Produto</th>
+            <th>Número do Lançamento</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.DAT_MES</td>
+                <td>@item.DAT_ANO</td>
+                <td>@item.COD_PRODUTO</td>
+                <td>@item.ProdutoCosif.Produto.DES_PRODUTO </td>
+                <td>@item.NUM_LANCAMENTO</td>
+                <td>@item.DES_DESCRICAO</td>
+                <td>@item.VAL_VALOR</td>
+              
+            </tr>
+        }
+    </tbody>
+</table>
+
